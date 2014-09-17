@@ -32,6 +32,7 @@
     _getFirstRowColumnIndexForMajorDiagonalOn: function(rowIndex, colIndex) {
       return colIndex - rowIndex;
     },
+    //Navigate to specific squares within the matrix.
 
     _getFirstRowColumnIndexForMinorDiagonalOn: function(rowIndex, colIndex) {
       return colIndex + rowIndex;
@@ -79,12 +80,34 @@
     //
     // test if a specific row on this board contains a conflict
     hasRowConflictAt: function(rowIndex) {
-      return false; // fixme
+      var  row = this.rows()[rowIndex];
+      var  numOfQueens =0;
+      var conflict;
+      for(var i = 0;i<row.length;i++){
+        if(row[i] === 1){
+          numOfQueens++;
+        }
+      }
+      conflict = numOfQueens >1? true:false;
+      return conflict;
     },
 
     // test if any rows on this board contain conflicts
     hasAnyRowConflicts: function() {
-      return false; // fixme
+      var result = false;
+      var rows = this.rows();
+
+      //for loop that goes through the rows of the board
+      for(var i = 0; i < rows.length; i++) {
+        //passes that row through hasRowConflictAt
+        //var row = rows[i];
+        var eval = this.hasRowConflictAt(i);
+          if(eval) {
+            result = eval;
+            return result;
+          }
+      }
+      return result;
     },
 
 
@@ -94,11 +117,49 @@
     //
     // test if a specific column on this board contains a conflict
     hasColConflictAt: function(colIndex) {
-      return false; // fixme
+      // want to get a column using the column index
+      // traverse the column for any conflicts
+      // return the result for any conflicts found
+
+      //create result
+      var result = false;
+      //grab all the rows
+      var rows = this.rows();
+      //counter
+      var counter = 0;
+      // use a for-loop to traverse the rows
+      for(var i = 0; i < rows.length; i++) {
+        // use column index to search the same position in each row
+        var rowColIndex = rows[i][colIndex];
+        // check for one or zero value
+          if(rowColIndex) {
+            // increase counter
+            counter++;
+          }
+      }
+
+      // if counter > 1
+      if(counter > 1) {
+        // set result to true
+        result = true;
+      }
+      return result; // fixme
     },
 
     // test if any columns on this board contain conflicts
     hasAnyColConflicts: function() {
+      //grab all rows
+      var rows = this.rows();
+      var hasColConflict;
+      //traverse the rows using for loop
+      for(var i = 0; i < rows.length; i++) {
+        //call hasColConflictAt passing in counter; returned value set to variable
+        hasColConflict = this.hasColConflictAt(i);
+          //if that variable === true
+          if(hasColConflict) {
+            return true;
+          }
+      }
       return false; // fixme
     },
 
