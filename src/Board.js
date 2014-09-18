@@ -188,7 +188,7 @@
             //increase counter variable
           timeRun++;
             //increase timeRun
-          recursive([tuple[0]+1,tuple[1]+1]);
+          return recursive([tuple[0]+1,tuple[1]+1]);
             //call recursive function passing in location row and column by 1
         }else{
         //else
@@ -196,7 +196,7 @@
           //  increase timeRun
           if(timeRun< maxTimeRun){
           //  if timeRun <= maxTimeRun
-            recursive([tuple[0]+1,tuple[1]+1]);
+            return recursive([tuple[0]+1,tuple[1]+1]);
             //  call recursive function passing in location row and column by 1
           }
         }
@@ -221,10 +221,11 @@
       var timeRun = 0;
       //set var maxTimeRun = this.rows().length + 2
       var maxTimeRun = this.rows().length + 2;
+      var nextColumn;
       //set var recurse function which takes startingPoint
-      var recurse = function(startingPoint) {
-        //set a var majorDiagonalConflict, instatiate with the return call from hasMajorDiagonalConflictAt(startingPoint)
-        var majorDiagonalConflict =  context.hasMajorDiagonalConflictAt(startingPoint);
+      var recurse = function(rowZeroColumnN) {
+        //set a var majorDiagonalConflict, instatiate with the return call from hasMajorDiagonalConflictAt(rowZeroColumnN)
+        var majorDiagonalConflict =  context.hasMajorDiagonalConflictAt(rowZeroColumnN);
         //inscrease timeRun
         timeRun++;
         //check if majorDiagonalConflict
@@ -233,14 +234,17 @@
           return true;
         } else if (timeRun < maxTimeRun) {
         //else if timeRun < maxTimeRun
-          //recurse using startingPoint++
-          recurse(startingPoint++);
+          //recurse using rowZeroColumnN++
+          nextColumn = rowZeroColumnN + 1;
+          return recurse(nextColumn);
+        } else {
+          return false;
         }
       };
+      //since recurse is returning boolean, we need to return the initial invocation on line 247
 
-      //call recurse with startingPoint
-      recurse(startingPoint);
-      return false;
+      //press 4 times after load to reach grid with major diagonal error
+      return recurse(startingPoint);
     },
 
 
