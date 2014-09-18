@@ -271,7 +271,7 @@
             //increase counter variable
           timeRun++;
             //increase timeRun
-          return recursive([tuple[0]-1,tuple[1]-1]);
+          return recursive([tuple[0]+1,tuple[1]-1]);
             //call recursive function passing in location row and column by 1
         }else{
         //else
@@ -279,7 +279,7 @@
           //  increase timeRun
           if(timeRun< maxTimeRun){
           //  if timeRun <= maxTimeRun
-            return recursive([tuple[0]-1,tuple[1]-1]);
+            return recursive([tuple[0]+1,tuple[1]-1]);
             //  call recursive function passing in location row and column by 1
           }
         }
@@ -303,7 +303,7 @@
       //set var timeRun = 0
       var timeRun = 0;
       //set var maxTimeRun = this.rows().length + 2
-      var maxTimeRun = this.rows().length + (this.rows().length-1);;
+      var maxTimeRun = this.rows().length + (this.rows().length-1);
       var nextColumn;
       //set var recurse function which takes startingPoint
       var recurse = function(rowZeroColumnN) {
