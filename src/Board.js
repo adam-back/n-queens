@@ -170,7 +170,41 @@
     //
     // test if a specific major diagonal on this board contains a conflict
     hasMajorDiagonalConflictAt: function(majorDiagonalColumnIndexAtFirstRow) {
-      return false; // fixme
+      var maxTimeRun = this.rows().length;
+      //set variable called maxTimeRun = this.rows.length
+      var timeRun=0;
+      //set variable timeRun to 0;
+      var counter = 0;
+      //set a counter variable
+      var startLocation = [0,majorDiagonalColumnIndexAtFirstRow];
+      //set a variable [0,majorDiagonalColumnIndexAtFirstRow]
+      var recursive=function(tuple){
+        if(this._isInBounds(tuple[0],tuple[1]) && isQueen(tuple[0],tuple[1]) ===1 && timeRun<=maxTimeRun){
+        //if location is in bounds and location is equal to 1 && timeRun<=maxTimeRun
+          counter++;
+            //increase counter variable
+          timeRun++;
+            //increase timeRun
+          recursive([tuple[0]+1,tuple[1]+1]);
+            //call recursive function passing in location row and column by 1
+        }else{
+        //else
+          timeRun++;
+          //  increase timeRun
+          if(timeRun<= maxTimeRun){
+          //  if timeRun <= maxTimeRun
+            recursive([tuple[0]+1,tuple[1]+1]);
+            //  call recursive function passing in location row and column by 1
+          }
+        }
+      }
+      recursive(startLocation);
+      //call recursive function passing tuple
+      if(counter>1){
+        return true;
+      }else{
+        return false;
+      }
     },
 
     // test if any major diagonals on this board contain conflicts
