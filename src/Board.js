@@ -220,7 +220,7 @@
       //set var timeRun = 0
       var timeRun = 0;
       //set var maxTimeRun = this.rows().length + 2
-      var maxTimeRun = this.rows().length + 2;
+      var maxTimeRun = this.rows().length + (this.rows().length-1);
       var nextColumn;
       //set var recurse function which takes startingPoint
       var recurse = function(rowZeroColumnN) {
@@ -254,12 +254,80 @@
     //
     // test if a specific minor diagonal on this board contains a conflict
     hasMinorDiagonalConflictAt: function(minorDiagonalColumnIndexAtFirstRow) {
-      return false; // fixme
+
+      var maxTimeRun = this.rows().length;
+      //set variable called maxTimeRun = this.rows.length
+      var timeRun=0;
+      //set variable timeRun to 0;
+      var counter = 0;
+      //set a counter variable
+      var startLocation = [0,minorDiagonalColumnIndexAtFirstRow];
+      var context = this;
+      //set a variable [0,majorDiagonalColumnIndexAtFirstRow]
+      var recursive=function(tuple){
+        if(context._isInBounds(tuple[0],tuple[1]) && context.isQueen([tuple[0],tuple[1]]) ===1 && timeRun<maxTimeRun){
+        //if location is in bounds and location is equal to 1 && timeRun<=maxTimeRun
+          counter++;
+            //increase counter variable
+          timeRun++;
+            //increase timeRun
+          return recursive([tuple[0]-1,tuple[1]-1]);
+            //call recursive function passing in location row and column by 1
+        }else{
+        //else
+          timeRun++;
+          //  increase timeRun
+          if(timeRun< maxTimeRun){
+          //  if timeRun <= maxTimeRun
+            return recursive([tuple[0]-1,tuple[1]-1]);
+            //  call recursive function passing in location row and column by 1
+          }
+        }
+      };
+
+      recursive(startLocation);
+      //call recursive function passing tuple
+      if(counter>1){
+        return true;
+      }else{
+        return false;
+      }
     },
 
     // test if any minor diagonals on this board contain conflicts
     hasAnyMinorDiagonalConflicts: function() {
-      return false; // fixme
+    //will only work if n>2
+      //set var starting point
+      var startingPoint = this._getFirstRowColumnIndexForMinorDiagonalOn(this.rows().length-1, this.rows().length-1);
+      var context = this;
+      //set var timeRun = 0
+      var timeRun = 0;
+      //set var maxTimeRun = this.rows().length + 2
+      var maxTimeRun = this.rows().length + (this.rows().length-1);;
+      var nextColumn;
+      //set var recurse function which takes startingPoint
+      var recurse = function(rowZeroColumnN) {
+        //set a var majorDiagonalConflict, instatiate with the return call from hasMajorDiagonalConflictAt(rowZeroColumnN)
+        var minorDiagonalConflict = context.hasMinorDiagonalConflictAt(rowZeroColumnN);
+        //inscrease timeRun
+        timeRun++;
+        //check if majorDiagonalConflict
+        if(minorDiagonalConflict) {
+          //return true
+          return true;
+        } else if (timeRun < maxTimeRun) {
+        //else if timeRun < maxTimeRun
+          //recurse using rowZeroColumnN++
+          nextColumn = rowZeroColumnN -1;
+          return recurse(nextColumn);
+        } else {
+          return false;
+        }
+      };
+      debugger;
+      //since recurse is returning boolean, we need to return the initial invocation on line 247
+      //press 4 times after load to reach grid with major diagonal error
+      return recurse(startingPoint);
     }
 
     /*--------------------  End of Helper Functions  ---------------------*/
