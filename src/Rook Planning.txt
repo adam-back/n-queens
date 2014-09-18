@@ -1,0 +1,62 @@
+we want to place a rook in the first row of an empty board and have
+multiple boards return with working solutions.
+
+1. Place rook in startingPoint in first row
+
+1 0 0
+0 0 0
+0 0 0
+
+2. Copy the board array two times
+
+1 0 0   1 0 0   1 0 0
+0 0 0   0 0 0   0 0 0
+0 0 0   0 0 0   0 0 0
+
+3. Add a rook to each column on row++
+
+1 0 0   1 0 0   1 0 0
+1 0 0   0 1 0   0 0 1
+0 0 0   0 0 0   0 0 0
+
+4. Copy each board so there are three instances
+
+1 0 0   1 0 0   1 0 0   1 0 0   1 0 0   1 0 0   1 0 0   1 0 0   1 0 0
+1 0 0   1 0 0   1 0 0   0 1 0   0 1 0   0 1 0   0 0 1   0 0 1   0 0 1
+0 0 0   0 0 0   0 0 0   0 0 0   0 0 0   0 0 0   0 0 0   0 0 0   0 0 0
+
+5. Add a rook to each column on row++
+
+ 1 0 0   1 0 0   1 0 0   1 0 0   1 0 0   1 0 0   1 0 0   1 0 0   1 0 0
+ 1 0 0   1 0 0   1 0 0   0 1 0   0 1 0   0 1 0   0 0 1   0 0 1   0 0 1
+ 1 0 0   0 1 0   0 0 1   1 0 0   0 1 0   0 0 1   1 0 0   0 1 0   0 0 1
+
+6. Check through each array for conflicts, deleting array with conflicts
+
+7. Return boards with no errors.
+
+1 0 0   1 0 0
+0 1 0   0 0 1
+0 0 1   0 1 0
+
+
+window.findNRooksSolution = function(n) {
+  //num of pieces placed
+  //create a blank board using n
+  //starting point as tuple
+  //create an object to record deadRows
+  //function which places rooks in the right quadrant, passing a tuple
+  //
+  //starting point will ALWAYS be in top row
+  //check to see if the first column is dead space, if it is, move over a column and down a row
+  //next rook will either be at that place or next column over
+
+  var solution = function(startingPoint) {
+     // if startingPoint is within deadRow
+       // add one to row (go down one)
+     // else if
+     // place rook at startingPoint
+     // insert that row and column into tracker obj
+      // update starting point by adding one to the row
+      //
+  }
