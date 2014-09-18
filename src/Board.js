@@ -163,7 +163,9 @@
       return false; // fixme
     },
 
-
+    isQueen: function(tuple) {
+      return this.rows()[tuple[0]][tuple[1]];
+    },
 
     // Major Diagonals - go from top-left to bottom-right
     // --------------------------------------------------------------
@@ -177,9 +179,10 @@
       var counter = 0;
       //set a counter variable
       var startLocation = [0,majorDiagonalColumnIndexAtFirstRow];
+      var context = this;
       //set a variable [0,majorDiagonalColumnIndexAtFirstRow]
       var recursive=function(tuple){
-        if(this._isInBounds(tuple[0],tuple[1]) && isQueen(tuple[0],tuple[1]) ===1 && timeRun<=maxTimeRun){
+        if(context._isInBounds(tuple[0],tuple[1]) && context.isQueen([tuple[0],tuple[1]]) ===1 && timeRun<maxTimeRun){
         //if location is in bounds and location is equal to 1 && timeRun<=maxTimeRun
           counter++;
             //increase counter variable
@@ -191,13 +194,14 @@
         //else
           timeRun++;
           //  increase timeRun
-          if(timeRun<= maxTimeRun){
+          if(timeRun< maxTimeRun){
           //  if timeRun <= maxTimeRun
             recursive([tuple[0]+1,tuple[1]+1]);
             //  call recursive function passing in location row and column by 1
           }
         }
-      }
+      };
+
       recursive(startLocation);
       //call recursive function passing tuple
       if(counter>1){
@@ -209,7 +213,34 @@
 
     // test if any major diagonals on this board contain conflicts
     hasAnyMajorDiagonalConflicts: function() {
-      return false; // fixme
+      //will only work if n>2
+      //set var starting point
+      var startingPoint = this._getFirstRowColumnIndexForMajorDiagonalOn(this.rows().length-1, 0);
+      var context = this;
+      //set var timeRun = 0
+      var timeRun = 0;
+      //set var maxTimeRun = this.rows().length + 2
+      var maxTimeRun = this.rows().length + 2;
+      //set var recurse function which takes startingPoint
+      var recurse = function(startingPoint) {
+        //set a var majorDiagonalConflict, instatiate with the return call from hasMajorDiagonalConflictAt(startingPoint)
+        var majorDiagonalConflict =  context.hasMajorDiagonalConflictAt(startingPoint);
+        //inscrease timeRun
+        timeRun++;
+        //check if majorDiagonalConflict
+        if(majorDiagonalConflict) {
+          //return true
+          return true;
+        } else if (timeRun < maxTimeRun) {
+        //else if timeRun < maxTimeRun
+          //recurse using startingPoint++
+          recurse(startingPoint++);
+        }
+      };
+
+      //call recurse with startingPoint
+      recurse(startingPoint);
+      return false;
     },
 
 
