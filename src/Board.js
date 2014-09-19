@@ -324,7 +324,6 @@
           return false;
         }
       };
-      debugger;
       //since recurse is returning boolean, we need to return the initial invocation on line 247
       //press 4 times after load to reach grid with major diagonal error
       return recurse(startingPoint);
